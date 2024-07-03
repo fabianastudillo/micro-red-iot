@@ -2,6 +2,16 @@ const sendData = require('../web/config');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 
+/**
+ * @class ConfigConnection - Configuración de la conexión
+ * @param {number} baudRate - Velocidad de transmisión
+ * @param {string} parity - Paridad
+ * @param {number} dataBits - Bits de datos
+ * @param {number} stopBits - Bits de parada
+ * @description Configuración de la conexión
+ * @method getConfig - Obtener la configuración de la conexión
+ * @returns {Object} - Configuración de la conexión
+ */
 class ConfigConnection {
     baudRate
     parity
@@ -25,6 +35,20 @@ class ConfigConnection {
     }
 }
 
+/**
+ * @class ConfigInverter - Configuración del inversor
+ * @param {number} serverId - ID del servidor
+ * @param {number} address - Dirección del servidor
+ * @param {number} registers - Registros del servidor
+ * @param {number} sampleTime - Tiempo de muestreo
+ * @description Configuración del inversor
+ * @method getInfo - Obtener la información del inversor
+ * @returns {Object} - Información del inversor
+ * @method setInfo - Establecer la información del inversor
+ * @param {number} serverId - ID del servidor
+ * @param {number} sampleTime - Tiempo de muestreo
+ * @returns {void}
+ */
 class ConfigInverter {
     serverId
     address
@@ -52,6 +76,41 @@ class ConfigInverter {
         this.sampleTime = sampleTime
     }
 }
+
+/**
+ * @class Inverter - Inversor
+ * @param {string} portDevice - Puerto del dispositivo
+ * @description Inversor
+ * @method getData - Obtener los datos
+ * @param {Object} client - Cliente
+ * @returns {void}
+ * @method setParameters - Establecer los parámetros
+ * @param {Object} parameters - Parámetros
+ * @returns {void}
+ * @method setConfig - Establecer la configuración
+ * @param {Object} config - Configuración
+ * @returns {void}
+ * @method getInfo - Obtener la información
+ * @returns {Object} - Información
+ * @method ConfigConnection - Configuración de la conexión
+ * @param {number} baudRate - Velocidad de transmisión
+ * @param {string} parity - Paridad
+ * @param {number} dataBits - Bits de datos
+ * @param {number} stopBits - Bits de parada
+ * @returns {void}
+ * @method ConfigInverter - Configuración del inversor
+ * @param {number} serverId - ID del servidor
+ * @param {number} address - Dirección del servidor
+ * @param {number} registers - Registros del servidor
+ * @param {number} sampleTime - Tiempo de muestreo
+ * @returns {void}
+ * @method sendData - Enviar datos
+ * @param {Object} packModbus - Paquete Modbus
+ * @param {string} token - Token
+ * @returns {void}
+ * @method uuidv4 - UUID
+ * @returns {string} - UUID
+ */
 
 class Inverter {
     id

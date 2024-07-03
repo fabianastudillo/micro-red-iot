@@ -1,3 +1,7 @@
+/**
+ * @param {string} bashScript - Script bash para detectar los puertos USB
+ */
+
 let bashScript = `
 echo '' > listUSB.txt \n
 echo '' > devices.js \n

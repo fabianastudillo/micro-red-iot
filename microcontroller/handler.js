@@ -1,5 +1,11 @@
 const { exec } = require('child_process');
 
+/**
+ * @function handler - Ejecutar el script bash para detectar los puertos USB
+ * @param {*} bashScript  - Script bash para detectar los puertos USB
+ * @returns  {Promise} - Promesa con la ejecución del script
+ */
+
 function handler(bashScript){
     console.log('Detectando Puertos USB ...')
     return new Promise(function(resolve, reject){
