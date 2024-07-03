@@ -1,4 +1,6 @@
 const sendData = require('../web/config');
+const { v4: uuidv4 } = require('uuid');
+require('dotenv').config();
 
 class ConfigConnection {
     baudRate
@@ -59,14 +61,14 @@ class Inverter {
     token
 
     constructor(portDevice){
-        this.id = Math.floor(Math.random()*10e8);
+        this.id = uuidv4();
         this.portDevice = portDevice;
         this.parameters = new ConfigConnection(9600,"none",8,1);
         this.config = new ConfigInverter(1,3000,83,1000);
         if(portDevice=='/dev/ttyUSB0'){
-            this.token = 'tokenDEVICE1';
+            this.token = process.env.INVERTER_ONE_ACCESS_TOKEN;
         }else{
-            this.token = 'tokenDEVICE2';
+            this.token = process.env.INVERTER_TWO_ACCESS_TOKEN;
         }
     }
 
@@ -76,21 +78,26 @@ class Inverter {
             idInverter: this.id,
             timeStampLocal: JSON.stringify(new Date()),
         }
+
+
         setInterval(()=>{
-            clientsModbus.setID(this.config.serverId)
-            clientsModbus.readInputRegisters(this.config.address, this.config.registers)
-                .then((data)=>{
+            packModbus.data = [2,70,0,1,0,660,0,608,0,3670,0,39,0,156,24,52,0,1672,0,1764,0,1414,43,1,1,0,1,0,1,0,2406,3406,0,0,0,2245,0,0,30,0,0,368,5999,3,0,0,0,0,4,11000,1000,1000,0,9,4,0,0,0,660,1000,12305,4641,546,2177,0,2,0,0,0,0,0,1,23,12,8,12,0,59,0,0,0,0,0];
 
-                    for(let i=0; i< this.registers; i++){
-                        packModbus[`var${i}`] = new data.data[i];
-                    }
+            sendData(packModbus, this.token);
+            // clientsModbus.setID(this.config.serverId);
+            // clientsModbus.readInputRegisters(this.config.address, this.config.registers)
+            //     .then((data)=>{
 
-                    sendData(packModbus, this.token);
-                })
-                .catch((e)=>{
-                    console.log(e)
-                    clientsModbus.close();
-                });
+            //         for(let i=0; i< this.registers; i++){
+            //             packModbus[`var${i}`] = new data.data[i];
+            //         }
+
+            //         sendData(packModbus, this.token);
+            //     })
+            //     .catch((e)=>{
+            //         console.log(e)
+            //         clientsModbus.close();
+            //     });
 
         },this.config.sampleTime)
     }

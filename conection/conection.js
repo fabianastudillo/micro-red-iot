@@ -16,14 +16,14 @@ function conection(devices){
 
     inverters.forEach((item,index)=>{
 
-        item.clientsModbus.connectRTUBuffered(item.inverter.portDevice, item.inverter.parameters,(err)=>{
-            if(err){
-                console.log('Error al conectar', err);
-                process.exit(1)
-            }else{
-                console.log('Conexión Exitosa en el puerto', item.inverter.portDevice)
-            }
-        })
+        // item.clientsModbus.connectRTUBuffered(item.inverter.portDevice, item.inverter.parameters,(err)=>{
+        //     if(err){
+        //         console.log('Error al conectar', err);
+        //         process.exit(1)
+        //     }else{
+        //         console.log('Conexión Exitosa en el puerto', item.inverter.portDevice)
+        //     }
+        // })
 
         item.inverter.getData(item.clientsModbus)
 
